@@ -1,8 +1,9 @@
 package com.example.task.shiro;
 
 
-import com.example.task.entity.DrmUser;
-import com.example.task.service.IDrmUserService;
+
+import com.example.task.entity.TUser;
+import com.example.task.service.ITUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -23,7 +24,7 @@ public class UserShiroRealm extends AuthorizingRealm {
 
 
     @Autowired
-    private IDrmUserService drmUserService;
+    private ITUserService userService;
 
 
     @Autowired
@@ -67,7 +68,7 @@ public class UserShiroRealm extends AuthorizingRealm {
                 }
             }
         }
-        DrmUser user = drmUserService.findOneByUserName(userName);
+        TUser user = userService.findOneByUserName(userName);
 //        System.out.println(user);
 
 //        用户不存在返回null，subject.login(token)会抛AuthenticationException异常
@@ -85,7 +86,7 @@ public class UserShiroRealm extends AuthorizingRealm {
 //        DrmUser user = (DrmUser) collection.iterator().next();
             return new SimpleAuthenticationInfo(
                     user, // 用户名
-                    user.getPassword(), //密码
+                    user.getSpassword(), //密码
                     getName()  //realm name
             );
         }

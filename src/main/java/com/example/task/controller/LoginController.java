@@ -6,13 +6,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.task.common.enums.CodeStatus;
 import com.example.task.common.msg.MessageResult;
 import com.example.task.common.utils.MD5Utils;
-import com.example.task.service.IDrmUserService;
+import com.example.task.service.ITUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,10 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/login")
 public class LoginController {
 
-    private Logger logger = LoggerFactory.getLogger(UserController.class);
+    private Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
-    private IDrmUserService userService;
+    private ITUserService userService;
 
     /**
      * 登录
