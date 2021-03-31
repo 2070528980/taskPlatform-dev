@@ -97,12 +97,12 @@ public class ShiroConfiguration {
         map.put("/api/index/**", "user");// 所有默认配置
 
         //登录认证不通过跳转（访问上面路径如果未登录就跳转到loginUnAuth）
-        shiroFilterFactoryBean.setLoginUrl("/loginUnAuth");
+        shiroFilterFactoryBean.setLoginUrl("/api/loginUnAuth");
 
         //登录成功后要跳转的链接
         //shiroFilterFactoryBean.setSuccessUrl("/index");
         //权限认证不通过跳转
-        shiroFilterFactoryBean.setUnauthorizedUrl("/authorUnAuth");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/api/authorUnAuth");
 //        配置需要拦截的
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
