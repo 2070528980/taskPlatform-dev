@@ -3,6 +3,7 @@ package com.example.task.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.task.common.msg.MessageResult;
+import com.example.task.common.utils.DateUtil;
 import com.example.task.common.utils.JsonUtil;
 import com.example.task.entity.TTask;
 import com.example.task.entity.TUser;
@@ -38,8 +39,11 @@ public class TTaskController {
     @RequestMapping("/save")
     public Object save(String jsonStr) {
 
+        System.out.println("-----------save--------------");
         TTask tTask = JSON.toJavaObject(JSON.parseObject(jsonStr),TTask.class);
         tTask.setProjectState(1);
+        tTask.setCreateDate(DateUtil.getSNDate());
+        tTask.setUpdateDate(DateUtil.getSNDate());
 
         System.out.println(tTask);
 
