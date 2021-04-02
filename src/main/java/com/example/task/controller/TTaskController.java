@@ -2,9 +2,12 @@ package com.example.task.controller;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.task.common.msg.MessageResult;
 import com.example.task.common.utils.DateUtil;
+import com.example.task.common.utils.DrmFileUtils;
 import com.example.task.common.utils.JsonUtil;
+import com.example.task.common.utils.MinioUtil;
 import com.example.task.entity.TTask;
 import com.example.task.entity.TUser;
 import com.example.task.service.ITTaskService;
@@ -17,6 +20,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 /**
  * <p>
@@ -39,17 +49,14 @@ public class TTaskController {
     @RequestMapping("/save")
     public Object save(String jsonStr) {
 
-        System.out.println("-----------save--------------");
+//        System.out.println("-----------save--------------");
         TTask tTask = JSON.toJavaObject(JSON.parseObject(jsonStr),TTask.class);
         tTask.setProjectState(1);
         tTask.setCreateDate(DateUtil.getSNDate());
         tTask.setUpdateDate(DateUtil.getSNDate());
-
-        System.out.println(tTask);
-
-        return  MessageResult.error();
-
-//        return MessageResult.success(taskService.save(tTask));
+//        System.out.println(tTask);
+//        return  MessageResult.error();
+        return MessageResult.success(taskService.save(tTask));
 
     }
 
@@ -60,6 +67,7 @@ public class TTaskController {
 //        return MessageResult.success(taskService.save(tTask));
 
     }
+
 
 
 

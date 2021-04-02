@@ -9,13 +9,7 @@ import java.io.*;
 public class DrmFileUtils {
 
 
-    /**
-     * @Author 张满
-     * @Description 文件上传
-     * @Date 2019/7/31  15:48
-     * @Param [file, filePath, fileName]
-     * @return void
-     **/
+
     public static Boolean uploadFile(byte[] file, String filePath, String fileName) throws Exception {
         FileOutputStream out = null;
         try {

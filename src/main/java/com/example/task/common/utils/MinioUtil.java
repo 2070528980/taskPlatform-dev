@@ -60,6 +60,32 @@ public class MinioUtil {
         }
     }
 
+
+    /**
+     * 文件上传 传入参数是 InputStream类型
+     * @param objectName
+     * @param inputStream
+     * @param size
+     * @param contentType
+     * @param bucketName
+     * @return
+     */
+    public static String uploadFile_InputStream(String objectName, InputStream inputStream, long size, String contentType,String bucketName) {
+
+        try {
+            MinioClient minioClient = new MinioClient(url, accessKey, secretKey);
+            if(checkBucket(minioClient,bucketName)){
+                minioClient.putObject(bucketName, objectName,  inputStream, size, contentType);
+                return minioClient.getObjectUrl(bucketName, objectName);
+            }else {
+                return null;
+            }
+        } catch (Exception e) {
+            logger.error("", e);
+            return null;
+        }
+    }
+
     /**
      * 检查桶是否存在，不存在就创建
      */

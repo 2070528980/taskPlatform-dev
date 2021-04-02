@@ -73,6 +73,8 @@ public class LoginController {
 
     @GetMapping("/logout")
     public Object logout() {
+
+        logger.info("退出登录！");
         SecurityUtils.getSubject().logout();
         return MessageResult.success("退出登录成功");
     }
