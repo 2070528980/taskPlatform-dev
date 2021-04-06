@@ -1,6 +1,7 @@
 package com.example.task.controller;
 
 
+import com.example.task.common.msg.MessageResult;
 import com.example.task.entity.TUser;
 import com.example.task.service.ITUserService;
 import org.apache.shiro.SecurityUtils;
@@ -40,7 +41,7 @@ public class TUserController {
         PrincipalCollection collection = subject.getPrincipals();
         TUser user = (TUser) collection.iterator().next();
 //            System.out.println("获取当前登录用户" + userName);
-        return userService.findOneByUserName(user.getSloginname()).toString();
+        return MessageResult.success(userService.findOneByUserName(user.getSloginname()).toString());
 
     }
 

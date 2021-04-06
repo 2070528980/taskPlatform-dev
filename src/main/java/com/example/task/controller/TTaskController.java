@@ -3,6 +3,9 @@ package com.example.task.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.task.common.msg.MessageResult;
 import com.example.task.common.utils.DateUtil;
 import com.example.task.common.utils.DrmFileUtils;
@@ -19,6 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
@@ -26,6 +31,7 @@ import org.springframework.web.multipart.support.StandardMultipartHttpServletReq
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -51,13 +57,49 @@ public class TTaskController {
 
 //        System.out.println("-----------save--------------");
         TTask tTask = JSON.toJavaObject(JSON.parseObject(jsonStr),TTask.class);
-        tTask.setProjectState(1);
-        tTask.setCreateDate(DateUtil.getSNDate());
-        tTask.setUpdateDate(DateUtil.getSNDate());
+        if(tTask.getId()!=null){
+            tTask.setUpdateDate(DateUtil.getSNDate());
+        }else {
+            tTask.setProjectState(1);
+            tTask.setCreateDate(DateUtil.getSNDate());
+            tTask.setUpdateDate(DateUtil.getSNDate());
+        }
+
 //        System.out.println(tTask);
 //        return  MessageResult.error();
-        return MessageResult.success(taskService.save(tTask));
+        return MessageResult.success(taskService.saveOrUpdate(tTask));
 
+    }
+
+    @RequestMapping("/list")
+    @ResponseBody
+    public String list(@RequestParam(value="page",required = false,defaultValue = "1") Integer page, @RequestParam(value="limit",required = false,defaultValue = "1") Integer limit
+            , @RequestParam(value="keyword",required = false,defaultValue = "") String keyword
+    ) {
+        IPage<TTask> page1 = new Page<>(page,limit);
+        QueryWrapper<TTask> queryWrapper = new QueryWrapper<TTask>()
+                .like("CHANNEL_NO",keyword);
+        IPage<TTask> pigpenIPage =  taskService.page(page1,null);
+        String json = JSON.toJSONString(pigpenIPage.getRecords());
+        return "{\"code\":0,\"msg\":\"\",\"count\":"+pigpenIPage.getTotal()+",\"data\":"+json+"}";
+    }
+
+    @RequestMapping("/listAll")
+    @ResponseBody
+    public Object listAll(String keyword) {
+
+        return MessageResult.success(taskService.list());
+    }
+
+
+    @RequestMapping("/del")
+    public Object del(Integer id) {
+        return MessageResult.success(taskService.removeById(id));
+    }
+
+    @RequestMapping("/getOneByID")
+    public Object getOneByID(Integer id) {
+        return MessageResult.success(taskService.getById(id));
     }
 
     @RequestMapping("/")
