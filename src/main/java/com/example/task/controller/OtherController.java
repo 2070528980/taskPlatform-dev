@@ -44,6 +44,14 @@ public class OtherController {
     }
 
 
+    @RequestMapping("/taskByID")
+    @ResponseBody
+    public Object taskByID(Integer id) {
+
+        return MessageResult.success(taskService.getById(id));
+    }
+
+
 
 
 
