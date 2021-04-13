@@ -94,6 +94,8 @@ public class ShiroConfiguration {
 
 //        登录验证拦截路径API开头的地址
 //        map.put("/api/**", "authc");
+
+//        拦截注释
         map.put("/api/index/**", "user");// 所有默认配置
 
         //登录认证不通过跳转（访问上面路径如果未登录就跳转到loginUnAuth）
