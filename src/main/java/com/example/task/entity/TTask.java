@@ -1,5 +1,6 @@
 package com.example.task.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -43,6 +44,10 @@ public class TTask implements Serializable {
     @TableField("projectLabel")
     private String projectLabel;
 
+    @ApiModelProperty(value = "金额")
+    @TableField("amount")
+    private String amount;
+
     @ApiModelProperty(value = "项目步骤")
     @TableField("ueditorContent")
     private String ueditorContent;
@@ -55,9 +60,11 @@ public class TTask implements Serializable {
     @TableField("recommendedIndex")
     private Integer recommendedIndex;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @TableField("createDate")
     private Date createDate;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @TableField("updateDate")
     private Date updateDate;
 

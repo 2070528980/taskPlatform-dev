@@ -43,6 +43,8 @@ public class FileController {
     public Object uploadApi(
             HttpServletRequest request) throws IOException {
 
+        System.out.println("------------uploadApi-----------");
+
         try {
             StandardMultipartHttpServletRequest mureq = (StandardMultipartHttpServletRequest) request;
             MultipartFile app = mureq.getFile("file");

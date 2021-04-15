@@ -1,5 +1,6 @@
 package com.example.task.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -48,10 +49,12 @@ public class TUser implements Serializable {
     @TableField("IROLEID")
     private Long iroleid;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "插入时间")
     @TableField("DCREATETIME")
     private Date dcreatetime;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "更新时间")
     @TableField("DUPDATETIME")
     private Date dupdatetime;
