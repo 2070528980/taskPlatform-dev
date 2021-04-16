@@ -93,6 +93,13 @@
             <version>3.0.10</version>
         </dependency>
 
+        <!--图片处理需要-->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -109,6 +116,8 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.4.3</version>
             </plugin>
+
+
 
         </plugins>
     </build>
