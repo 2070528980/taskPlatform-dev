@@ -44,6 +44,11 @@ public class TTask implements Serializable {
     @TableField("projectLabel")
     private String projectLabel;
 
+    @ApiModelProperty(value = "项目标签ID")
+    @TableField("projectLabelID")
+    private String projectLabelID;
+
+
     @ApiModelProperty(value = "金额")
     @TableField("amount")
     private String amount;

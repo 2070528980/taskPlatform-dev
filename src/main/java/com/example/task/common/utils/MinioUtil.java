@@ -14,7 +14,7 @@ public class MinioUtil {
 
     private final static Logger logger = LoggerFactory.getLogger(MinioUtil.class);
 
-    private static String url = "http://139.155.82.188:9000";  //minio服务的IP端口
+    private static String url = "http://94.191.115.200:9000";  //minio服务的IP端口
     private static String accessKey = "admin";
     private static String secretKey = "adminadmin";
 
