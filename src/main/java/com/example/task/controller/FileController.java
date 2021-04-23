@@ -42,44 +42,6 @@ public class FileController {
     private String drmPath;
 
 
-//    @RequestMapping("/uploadApi2")
-//    public Object uploadApi2(
-//            HttpServletRequest request) throws IOException {
-//
-//        System.out.println("------------uploadApi-----------");
-//
-//        try {
-//            StandardMultipartHttpServletRequest mureq = (StandardMultipartHttpServletRequest) request;
-//            MultipartFile app = mureq.getFile("file");
-//            if(app == null){
-//                return MessageResult.error("上传文件为空");
-//            }
-//            String objectName = UUID.randomUUID().toString();
-//            String originalFilename = app.getOriginalFilename(); // 原名称
-//            String suffix = DrmFileUtils.getSuffix(originalFilename);
-//            String bucketName = "task";
-//            objectName = objectName + '.' + suffix;
-//
-//            // 上传文件
-//            MinioUtil.uploadFile_InputStream(objectName, app.getInputStream(),
-//                    app.getSize(), app.getContentType(),bucketName);
-//
-//            JSONObject result = new JSONObject();
-//            result.put("code", 0);
-//            result.put("msg", "success");
-//            JSONObject data = new JSONObject();
-//            data.put("src",  bucketName + File.separator + objectName);
-//            data.put("url",  bucketName + File.separator + objectName);
-//            data.put("title", originalFilename);
-//            result.put("data", data);
-//
-//            return result;
-//        } catch (Exception e) {
-//            return MessageResult.error(e.getMessage());
-//        }
-//    }
-
-
     @ResponseBody
     @RequestMapping("/uploadApi")
     public Object character_uploadFile(@RequestPart(name = "edit", required = false) MultipartFile file) {

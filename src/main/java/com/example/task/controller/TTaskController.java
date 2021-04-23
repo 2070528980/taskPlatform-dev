@@ -73,13 +73,17 @@ public class TTaskController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public String list(@RequestParam(value="page",required = false,defaultValue = "1") Integer page, @RequestParam(value="limit",required = false,defaultValue = "1") Integer limit
-            , @RequestParam(value="keyword",required = false,defaultValue = "") String keyword
+    public String list(@RequestParam(value="page",required = false,defaultValue = "1") Integer pageNum, @RequestParam(value="limit",required = false,defaultValue = "1") Integer limit
+            , @RequestParam(value="keyword",required = false,defaultValue = "") String keyword, @RequestParam(value="ProjectState",required = false,defaultValue = "") String ProjectState
     ) {
-        IPage<TTask> page1 = new Page<>(page,limit);
+
+//        System.out.println(pageNum);
+//        System.out.println(limit);
+        IPage<TTask> page = new Page<>(pageNum,limit);
         QueryWrapper<TTask> queryWrapper = new QueryWrapper<TTask>()
-                .like("CHANNEL_NO",keyword);
-        IPage<TTask> pigpenIPage =  taskService.page(page1,null);
+                .like("ProjectState",ProjectState)
+                .like("projectName",keyword).orderByDesc("updateDate");
+        IPage<TTask> pigpenIPage =  taskService.page(page,queryWrapper);
         String json = JSON.toJSONString(pigpenIPage.getRecords());
         return "{\"code\":0,\"msg\":\"\",\"count\":"+pigpenIPage.getTotal()+",\"data\":"+json+"}";
     }
@@ -90,7 +94,6 @@ public class TTaskController {
 
         return MessageResult.success(taskService.list());
     }
-
 
     @RequestMapping("/del")
     public Object del(Integer id) {
@@ -105,10 +108,27 @@ public class TTaskController {
     @RequestMapping("/")
     public Object test() {
         return  MessageResult.success();
-
-//        return MessageResult.success(taskService.save(tTask));
-
     }
+
+
+    @RequestMapping("/batchUpdateDate")
+    public Object batchUpdateDate(String idStr) {
+        String[] idArr =idStr.split(",");
+        TTask task = new TTask();
+        task.setUpdateDate(DateUtil.getSNDate());
+        return MessageResult.success(taskService.update(task,new QueryWrapper<TTask>().in("id",idArr)));
+    }
+
+    @RequestMapping("/batchUpdateState")
+    public Object batchUpdateState(String idStr,Integer ProjectState) {
+        String[] idArr =idStr.split(",");
+        TTask task = new TTask();
+        task.setProjectState(ProjectState);
+        task.setUpdateDate(DateUtil.getSNDate());
+        return MessageResult.success(taskService.update(task,new QueryWrapper<TTask>().in("id",idArr)));
+    }
+
+
 
 
 

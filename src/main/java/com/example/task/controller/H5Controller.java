@@ -39,10 +39,10 @@ public class H5Controller {
     @RequestMapping("/taskListAll")
     @ResponseBody
     public Object taskListAll(String keyword,String select) {
-        System.out.println("keyword:"+keyword);
-        System.out.println("select:"+select);
-        QueryWrapper<TTask> queryWrapper = new QueryWrapper<TTask>().like("projectLabel",select)
-                .and(wrapper -> wrapper.like("projectName",keyword).or().like("projectLabel",keyword));
+//        System.out.println("keyword:"+keyword);
+//        System.out.println("select:"+select);
+        QueryWrapper<TTask> queryWrapper = new QueryWrapper<TTask>().eq("projectState",1).like("projectLabel",select)
+                .and(wrapper -> wrapper.like("projectName",keyword).or().like("projectLabel",keyword)).orderByDesc("updateDate");
         return MessageResult.success(taskService.list(queryWrapper));
     }
 
