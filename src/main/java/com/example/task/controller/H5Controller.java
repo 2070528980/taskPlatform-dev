@@ -46,13 +46,14 @@ public class H5Controller {
             ,@RequestParam(value="select",required = false,defaultValue = "") String select
             , @RequestParam(value="pageNum",required = false,defaultValue = "1") Integer pageNum
             , @RequestParam(value="pageSize",required = false,defaultValue = "8") Integer pageSize) {
-        System.out.println("keyword:"+keyword);
-        System.out.println("select:"+select);
-        System.out.println("pageNum:"+pageNum);
-        System.out.println("pageSize:"+pageSize);
+//        System.out.println("keyword:"+keyword);
+//        System.out.println("select:"+select);
+//        System.out.println("pageNum:"+pageNum);
+//        System.out.println("pageSize:"+pageSize);
         IPage<TTask> page = new Page<>(pageNum,pageSize);
         QueryWrapper<TTask> queryWrapper = new QueryWrapper<TTask>().eq("projectState",1).like("projectLabel",select)
-                .and(wrapper -> wrapper.like("projectName",keyword).or().like("projectLabel",keyword)).orderByDesc("updateDate");
+                .and(wrapper -> wrapper.like("projectName",keyword).or().like("projectLabel",keyword))
+                .orderByDesc("recommendedIndex").orderByDesc("updateDate");
         IPage<TTask> pigpenIPage =  taskService.page(page,queryWrapper);
 //        String json = JSON.toJSONString(pigpenIPage.getRecords());
         return MessageResult.success(pigpenIPage.getRecords());
