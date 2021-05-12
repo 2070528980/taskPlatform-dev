@@ -1,10 +1,12 @@
 package com.example.task.controller;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import com.example.task.common.enums.CodeStatus;
 import com.example.task.common.msg.MessageResult;
+import com.example.task.common.utils.JsonUtil;
 import com.example.task.common.utils.MD5Utils;
 import com.example.task.service.ITUserService;
 import org.apache.shiro.SecurityUtils;
@@ -17,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,11 +55,9 @@ public class LoginController {
             jsonObject.put("token", subject.getSession().getId());
             jsonObject.put("msg", "登录成功");
             jsonObject.put("code", CodeStatus.STATUS_SUCCESS.getCode());
-
         } catch (IncorrectCredentialsException e) {
             jsonObject.put("msg", "密码错误");
         } catch (LockedAccountException e) {
-
             jsonObject.put("msg", "登录失败，该用户已被冻结");
         } catch (AuthenticationException e) {
             jsonObject.put("msg", "该用户不存在");
@@ -73,7 +74,6 @@ public class LoginController {
 
     @GetMapping("/logout")
     public Object logout() {
-
         logger.info("退出登录！");
         SecurityUtils.getSubject().logout();
         return MessageResult.success("退出登录成功");
